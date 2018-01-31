@@ -1,0 +1,5 @@
+# Don't commit all the modules, as they'll be repopulated by `npm install`
+node_modules/
+# The .env file is for sensitive or irrelevant-to-other-systems environment variables
+.env
+

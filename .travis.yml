@@ -1,0 +1,18 @@
+dist: trusty
+
+language: node_js
+node_js:
+    - "node"
+
+install:
+    - npm install
+    - npm install -g snyk
+
+script:
+    - snyk test
+    - npm run eslint
+    - npm run test
+
+cache:
+    directories:
+        - node_modules
