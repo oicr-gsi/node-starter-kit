@@ -1,6 +1,7 @@
 # Node Starter Kit
 This is intended to be a basic set of files and packages for use with any new 
-OICR GSI Node project.
+OICR GSI Node project. API projects have an additional set of recommendations
+and best practices, available in the `api` branch.
 
 ## License
 We use MIT by default. Always check your dependencies to see if they use an 
