@@ -134,3 +134,88 @@ Change `scripts.test` in `package.json` to `mocha --exit`.
 BDD syntax. 
 ### Usage
 Require it in your test file, and use it.
+
+# APIs
+If you're writing an API, chances are good that you'll need a server and maybe
+even a database. Here are some recommendations:
+
+## Server: Express
+[Express](http://expressjs.com/) is a mature, fast, unopinionated, minimalist
+web framework. See `server.js` for an example setup that makes use of the other
+packages in this project. It is usually the `main`file in your `package.json` if a
+server is your project's main goal.
+
+## Logging: Winston
+[Winston](https://github.com/winstonjs/winston) allows multiple loggers (error,
+info, etc.) to be active at the same time, with custom formatting for each.
+They're all output as JSON, which is nice for machine parsing. See
+`utils/logger.js` for an example setup which will print separate logs for
+info-and-more-severe, error-and-more-severe, and if it's not a production
+environment, debug-and-more-severe.
+
+## Monitoring: Prometheus
+[Prom-client](https://github.com/siimon/prom-client) is a Prometheus client for
+Node. See `utils/prometheus.js` for an example file for a server.
+
+## Security: Helmet
+[Helmet](https://helmetjs.github.io/) helps you secure your Express app. Note
+the "helps"; [OWASP](https://www.owasp.org/index.php/Getting_Started) has lots of
+information about web security too.
+### Usage
+See `server.js`
+
+## Allowing requests from other domains: CORS
+[CORS](https://github.com/expressjs/cors) is a package to enable CORS on your
+Express app, so that other websites can request data from your server.
+### Usage
+See `server.js`
+
+## Reading data from a request body: Body-Parser
+[body-parser](https://github.com/expressjs/body-parser) allows your Express app
+to read simple request bodies. It does not handle multi-part request bodies.
+### Usage
+See `server.js`
+
+## Assigning a UID to each request: UUID
+[UUID](https://github.com/kelektiv/node-uuid) allows you to generate UUIDs to
+assign to each request. If you're using multiple services for a single request
+and something goes wrong, it helps with debugging.
+### Usage
+See `server.js`
+
+## Documentation: Swagger-JSDoc
+[Swagger-JSDoc](https://github.com/Surnet/swagger-jsdoc) allows you to either
+generate Swagger from JSDoc code, or to write blocks of Swagger (OpenAPI)
+documentation above each method. I find this to be preferable to something like
+Swagger-UI-Express which requires you to put all of your documentation into one
+YAML file, but your mileage may vary.
+### Usage
+TODO...
+
+## Database Migrations: Flyway
+The [flywaydb-cli](https://www.npmjs.com/package/flywaydb-cli) package is a
+wrapper around Flyway, which allows you to apply and track database migrations
+for multiple database types. You'll want to go to the
+[Flyway](https://flywaydb.org/documentation/) documentation for usage and
+debugging.
+### Usage
+Primarily used via `script` commands in `package.json`.
+```
+"scripts": {
+  "fw:migrate": 
+    "node_modules/flywaydb-cli/lib/flyway-4.2.0/flyway -X -configFile=conf/flyway.conf migrate"
+}
+```
+See https://www.npmjs.com/package/flywaydb-cli for additional usage examples.
+
+## PostgreSQL Database Interface: pg-promise
+The [pg-promise](https://www.npmjs.com/package/pg-promise) package provides a
+Promise-based interface for PostgreSQL.
+### Usage
+```javascript
+const pgp = require('pg-promise')({optionsObj});
+const pg = pgp(process.env.DB_CONNECTION);
+pg.any(SQL)
+  .then(data => {})
+  .catch(err => {});
+```
