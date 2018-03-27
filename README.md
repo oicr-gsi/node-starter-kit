@@ -11,13 +11,33 @@ want to make your project closed-source, or to others who want to use your
 project in their own closed-source project. This is a vast oversimplification 
 and more comprehensive explanations exist on the internet.
 
+## Getting Started
+Clone the project, then rename it and set a new upstream repository named _YourProject_ (replace with your project's name).
+```bash
+$ git clone git@github.com:oicr-gsi/node-starter-kit.git
+$ mv node-starter-kit YourProject
+$ cd YourProject
+$ git remote -v # view current remotes
+$ git remote rm origin
+```
+Create a new GitHub repository named YourProject. Do not initialize the repository with a README or a license. Now follow the instructions to push an existing repository from the command line
+```bash
+$ git remote add origin git@github.com:oicr-gsi/YourProject.git
+$ git push -u origin master
+```
+Update any outdated packages:
+```bash
+$ npm outdated # see if anything needs to be updated
+$ npm update # if anything needs to be updated
+```
+At this point you can delete or rename this README and replace it with one more relevant to your project.
+
 ## Dotenv
 [Dotenv](https://github.com/motdotla/dotenv) takes the variables you've declared 
-in a `.env` file and loads them into `process.env`.
+in a `.env` file and loads them into `process.env`. It will not overwrite any variables which are already declared in the environment.
 
 ### Usage
-"As early as possible in your application, require and configure 
-dotenv."
+"As early as possible in your application, require and configure dotenv."
 ```javascript
 require('dotenv').config()
 ```
@@ -45,13 +65,13 @@ npm run lint
 here to avoid formatting bikeshedding and to minimize unnecessary code diffs. It 
 will run through your code and automatically format it. The settings in 
 `.prettierrc` only vary from the default Prettier settings in that they will 
-cause Prettier to use single quotes instead of double quotes.
+cause Prettier to use single quotes instead of double quotes. This is _a_ set of standards, not _the_ set of standards; if you feel strongly about single quotes vs. double quotes or other choices Prettier has made, go ahead and change them in `.prettierrc`.
 
 ### Usage
+Runs automatically on commit. To run manually:
 ```
-npm run pretty-quick
+npm run prettier
 ```
-(or let Husky do it for you)
 
 ## Husky
 [Husky](https://github.com/typicode/husky) automatically runs commands on each 
