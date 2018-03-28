@@ -25,8 +25,9 @@ Create a new GitHub repository named YourProject. Do not initialize the reposito
 $ git remote add origin git@github.com:oicr-gsi/YourProject.git
 $ git push -u origin master
 ```
-Update any outdated packages:
+Install packages, and update any outdated packages:
 ```bash
+$ npm install --local
 $ npm outdated # see if anything needs to be updated
 $ npm update # if anything needs to be updated
 ```

@@ -17,8 +17,7 @@
     ]
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/oicr-gsi/node-starter-kit.git"
+    "type": "git"
   },
   "author": "",
   "license": "MIT",
