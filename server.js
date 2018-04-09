@@ -12,13 +12,13 @@ const uuid = require('uuid/v4');
 const app = express();
 app.use(helmet());
 app.use(cors());
-app.use(bodyParser.json({ type: 'application/json' });
+app.use(bodyParser.json({ type: 'application/json' }));
 
 // generate a UID for each request and log it
 app.use((req, res, next) => {
-  if (!req.uid) req.uid = uuid();
+  if (!req.uid) req.uid = uuidv4();
   res.uid = req.uid;
-  logger.info({ 
+  logger.info({
     uid: req.uid,
     method: req.method,
     url: req.originalUrl,
@@ -34,14 +34,9 @@ app.use((req, res, next) => {
 // metrics go last
 app.use((req, res, next) => {
   const responseTimeInMs = Date.now - Date.parse(req._startTime);
-  const path = req.route? req.route.path : req.originalUrl;
-  prom.httpRequestDurationMiiliseconds
-    .labels(path)
-    .observe(responseTimeInMs);
-  prom.httpRequestCounter
-    .labels(path, req.method, res.statusCode)
-    .inc();
-  }
+  const path = req.route ? req.route.path : req.originalUrl;
+  prom.httpRequestDurationMiiliseconds.labels(path).observe(responseTimeInMs);
+  prom.httpRequestCounter.labels(path, req.method, res.statusCode).inc();
   next();
 });
 
