@@ -14,11 +14,14 @@ app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json({ type: 'application/json' }));
 
-// generate a UID for each request and log it
 app.use((req, res, next) => {
+  // manually set a start time because Express seems to change this with each version
+  req._startTime = new Date();
+  // generate a UID for each request and log it
   if (!req.uid) req.uid = uuidv4();
   res.uid = req.uid;
   logger.info({
+    startTime: req._startTime,
     uid: req.uid,
     method: req.method,
     url: req.originalUrl,
@@ -29,7 +32,29 @@ app.use((req, res, next) => {
 
 // add request handlers here
 
-// error handling goes second-last
+// error handling goes second-last, and is noted by the `err` argument which comes first
+// this is one pattern, but others would work too
+app.use((err, req, re, next) => {
+  if (res.headersSent) {
+    logger.error({
+      message:
+        'Headers sent before error handler invoked for err ' +
+        (err.message ? err.message : ' with no message'),
+      uid: req.uid
+    });
+    return next();
+  }
+  if (!err.status) {
+    // error hasn't been assigned a status code where it was thrown, so it may be an unexpected error
+    logger.error({
+      uid: req.uid,
+      message: err.message ? err.message : 'error has no message'
+    });
+    res.status(500).json({ error: 'An unexpected error has occurred.' });
+  }
+  res.end();
+  next();
+});
 
 // metrics go last
 app.use((req, res, next) => {
