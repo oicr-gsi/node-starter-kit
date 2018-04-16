@@ -12,7 +12,8 @@ const uuid = require('uuid/v4');
 const app = express();
 app.use(helmet());
 app.use(cors());
-app.use(bodyParser.json({ type: 'application/json' }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use((req, res, next) => {
   // manually set a start time because Express seems to change this with each version
