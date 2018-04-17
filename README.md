@@ -107,8 +107,9 @@ your token. (See [this blog
 post](https://blog.travis-ci.com/2017-04-20-continuous-security-snyk-travis-ci/) 
 for more details on running Snyk on TravisCI.)
 If Snyk finds vulnerable dependencies, the build will fail and you'll have to fix
-them manually using Snyk on the command line, which will walk you through 
-options for fixing the vulnerabilities.
+them manually using `snyk test` on the command line, which will walk you through 
+options for fixing the vulnerabilities. Choosing "ignore" means the issue will be
+raised again in 30 days.
 ```
   npm install -g snyk
   cd "${MY_PROJECT_PATH}"
