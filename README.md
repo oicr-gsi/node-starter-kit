@@ -197,13 +197,17 @@ The [flywaydb-cli](https://www.npmjs.com/package/flywaydb-cli) package is a
 wrapper around Flyway, which allows you to apply and track database migrations
 for multiple database types. You'll want to go to the
 [Flyway](https://flywaydb.org/documentation/) documentation for usage and
-debugging.
+debugging. Our most frequently used commands are `clean` and `migrate`.
+
+Note that `npm install` for this package will download the latest available 
+version of Flyway, so the underlying Flyway (syntax, etc.) may change even if
+the `flywaydb-cli` version has not changed.
 ### Usage
 Primarily used via `script` commands in `package.json`.
 ```
 "scripts": {
   "fw:migrate": 
-    "node_modules/flywaydb-cli/lib/flyway-4.2.0/flyway -X -configFile=conf/flyway.conf migrate"
+    "flyway -X -configFile=conf/flyway.conf -locations=filesystem:<relative_path_to_dir_where_migrations_live> migrate"
 }
 ```
 See https://www.npmjs.com/package/flywaydb-cli for additional usage examples.
