@@ -23,7 +23,7 @@ $ git remote rm origin
 Create a new GitHub repository named YourProject. Do not initialize the repository with a README or a license. Now follow the instructions to push an existing repository from the command line
 ```bash
 $ git remote add origin git@github.com:oicr-gsi/YourProject.git
-$ git push -u origin master
+$ git push -u origin develop
 ```
 Install packages, and update any outdated packages:
 ```bash
